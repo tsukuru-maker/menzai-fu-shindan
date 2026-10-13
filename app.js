@@ -70,15 +70,26 @@
   function answersToString(a) { return a.join(''); }
 
   /* バックエンドが「置かれていない」ことの合図。
-     GitHub Pages のような静的ホスティングでは /api/* が 404 になる。
-     これは失敗ではなく「そもそも無い」なので、画面には何も出さない。
+     GitHub Pages のような静的ホスティングでは /api/* がこう返る：
 
-     一方、D1 の無料枠切れなどで 503 が返るのは「あるのに壊れている」。
-     こちらは 1 行だけ知らせる（黙って消えると不具合に見えるため）。 */
+         GET  /api/stats   → 404  text/html
+         POST /api/submit  → 405  （content-type すら無い）
+
+     ステータスコードだけを見ていると POST 側の 405 を取りこぼす
+     （実際に公開して踏んだ）。なので「JSON かどうか」で判定する。
+     Worker は必ず application/json を返すので、これで確実に分かれる。
+
+     404/405 = そもそも無い → 画面には何も出さない
+     JSON なのに失敗 = あるのに壊れている（D1 の無料枠切れなど）
+                       → 1 行だけ知らせる（黙ると不具合に見えるため） */
   var apiAbsent = false;
 
   function handleApiResponse(r) {
-    if (r.status === 404) { apiAbsent = true; return null; }
+    var ct = r.headers.get('content-type') || '';
+    if (ct.indexOf('application/json') === -1) {
+      apiAbsent = true;
+      return null;
+    }
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
   }
