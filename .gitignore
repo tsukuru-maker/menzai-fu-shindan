@@ -1,0 +1,34 @@
+# ==================================================
+# 公開リポジトリに入るのは「動く 6 ファイル + このファイル」だけ
+#
+#   index.html  style.css  data.js  logic.js  app.js  ogp.png
+#
+# GitHub Pages は「main / (root)」で配信する。ルートに置いた
+# ファイルはすべて公開されるので、制作物はここで全部除外する。
+# （bukatsu-shindan と同じ構成）
+# ==================================================
+
+# --- 制作・検証用（公開しない） ---
+tools/
+docs/
+README.md
+_shots/
+__pycache__/
+tools/__pycache__/
+
+# --- Cloudflare に載せ替えるとき用（今は GitHub Pages なので公開しない） ---
+src/
+wrangler.jsonc
+schema.sql
+package.json
+package-lock.json
+
+# --- OS ---
+.DS_Store
+
+# --- Node ---
+node_modules/
+
+# --- wrangler のローカル状態 ---
+.wrangler/
+.dev.vars

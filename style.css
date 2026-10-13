@@ -1,0 +1,421 @@
+/* ============================================================
+   免罪符診断 — スタイル
+   方針：かわいい × ネオ・ブルータリズム
+         丸い・太い黒枠・硬い影・高彩度。本文はとにかく刺す。
+         （見た目が柔らかいほど、本文の毒が効く）
+   ============================================================ */
+
+:root {
+  --bg: #FFF7EC;
+  --ink: #16161A;
+  --ink-soft: #6B6B75;
+  --card: #FFFFFF;
+  --line: 3px solid var(--ink);
+  --shadow: 5px 5px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --r: 22px;
+  --r-sm: 14px;
+  --accent: #FF4D8D;
+  --maxw: 560px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+  font-weight: 500;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  /* ダブルタップ拡大を防ぐ（選択のタップが拡大に食われるのを避ける） */
+  touch-action: manipulation;
+}
+
+#app {
+  flex: 1;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.screen { animation: pop .28s cubic-bezier(.2, 1.4, .5, 1) both; }
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen { animation: none; }
+  * { transition: none !important; }
+}
+
+/* ------------------------------------------------------------
+   共通パーツ
+   ------------------------------------------------------------ */
+
+.kicker {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--ink-soft);
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 16px 20px;
+  border: var(--line);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.btn--big { font-size: 18px; padding: 18px 24px; }
+
+.btn--ghost {
+  background: var(--card);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px 20px;
+  margin-top: 14px;
+}
+
+.fineprint {
+  margin: 26px 0 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.site-footer {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 18px 0 26px;
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------
+   画面 1｜スタート
+   ------------------------------------------------------------ */
+
+.screen--start { text-align: center; }
+
+.hero-title {
+  margin: 0 0 6px;
+  font-family: "Yusei Magic", "Zen Maru Gothic", sans-serif;
+  font-size: clamp(46px, 15vw, 68px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: .02em;
+  /* 蛍光ピンクの下敷き */
+  text-shadow: 4px 4px 0 var(--accent);
+}
+
+.hero-sub {
+  margin: 0 0 28px;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.hero-card {
+  margin: 0 0 32px;
+  padding: 20px 22px;
+  border: var(--line);
+  border-radius: var(--r);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  text-align: left;
+  font-size: 15px;
+}
+
+.hero-card p { margin: 0 0 8px; }
+.hero-card p:last-child { margin-bottom: 0; }
+.hero-card strong { font-weight: 900; background: linear-gradient(transparent 58%, #FFD93D 58%); }
+
+/* ------------------------------------------------------------
+   画面 2｜診断
+   ------------------------------------------------------------ */
+
+.qhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.qcount {
+  font-size: 20px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.qcount__sep { margin: 0 2px; font-size: 13px; color: var(--ink-soft); }
+
+.dots { display: flex; gap: 6px; }
+
+.dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #E4DCCF;
+}
+
+.dot--done { background: var(--ink); }
+.dot--now  { background: var(--accent); transform: scale(1.5); }
+
+.qtext {
+  margin: 0 0 24px;
+  font-size: clamp(21px, 5.6vw, 25px);
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: .01em;
+}
+
+.choices { display: flex; flex-direction: column; gap: 12px; }
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 18px;
+  border: var(--line);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease, background .12s ease;
+}
+
+.choice:hover { background: #FFF1F6; }
+
+.choice:active,
+.choice--on {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
+  background: var(--accent);
+}
+
+.choice__mark {
+  flex: none;
+  width: 22px;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.choice--on .choice__mark { color: var(--ink); }
+
+.qfoot { margin-top: 26px; }
+
+/* ------------------------------------------------------------
+   画面 3｜結果
+   ------------------------------------------------------------ */
+
+.screen--result,
+.screen--egg,
+.screen--404 { text-align: center; }
+
+.verdict {
+  margin: 0 0 4px;
+  font-family: "Yusei Magic", "Zen Maru Gothic", sans-serif;
+  font-size: clamp(38px, 11.5vw, 56px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: .01em;
+  color: var(--c, var(--accent));
+  text-shadow: 3px 3px 0 var(--ink);
+  word-break: auto-phrase;
+}
+
+.verdict--egg { color: var(--ink); text-shadow: 3px 3px 0 #FFD93D; }
+
+/* 彩蛋は --accent が黒なので、そのままだと .btn が「黒地に黒字」で消える。
+   主ボタンだけ黄色に差し替える（黒×黄のコントラストは彩蛋の世界観とも合う）。 */
+.screen--egg .btn { background: #FFD93D; }
+
+.verdict__rule {
+  width: 64px;
+  height: 6px;
+  margin: 18px auto 26px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.body-copy {
+  margin: 0 0 26px;
+  padding: 24px 22px;
+  border: var(--line);
+  border-radius: var(--r);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+.body-copy p { margin: 0 0 12px; }
+.body-copy p:last-child { margin-bottom: 0; }
+
+/* 一番刺さる 1 行だけ強調。共有文に載る行と必ず同じ行（app.js が hook を付ける）。
+   「最後の行」ではない ── 補一刀と最後の一撃の 2 段で終わる型があるため。 */
+.body-copy .punch { font-weight: 900; }
+
+.menzai {
+  margin: 0 0 26px;
+  padding: 18px 22px;
+  border: 3px dashed var(--ink);
+  border-radius: var(--r);
+  background: #FFD93D;
+  box-shadow: var(--shadow);
+  transform: rotate(-1.2deg);
+}
+
+.menzai__label {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .22em;
+  color: var(--ink);
+}
+
+.menzai__text {
+  margin: 0;
+  font-family: "Yusei Magic", "Zen Maru Gothic", sans-serif;
+  font-size: clamp(19px, 5.4vw, 23px);
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------
+   統計（API が無ければ丸ごと消える）
+   ------------------------------------------------------------ */
+
+.stats { margin: 0 0 26px; display: flex; flex-direction: column; gap: 12px; }
+
+.stats:empty { display: none; }
+
+.stat {
+  padding: 16px 20px;
+  border: var(--line);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+}
+
+.stat--hero { background: #E9FBF4; }
+.stat--minor { background: #FFF1F6; }
+
+.stat__main { margin: 0; font-size: 15px; font-weight: 900; line-height: 1.6; }
+.stat__num  { margin: 0; font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.stat__note { margin: 2px 0 0; font-size: 12px; font-weight: 400; color: var(--ink-soft); }
+.stat--minor .stat__note { margin: 0 0 4px; }
+
+/* 集計が取れなかったときの 1 行。枠も影も付けない（失敗を大きく見せない） */
+.stat__note--muted {
+  margin: 0;
+  padding: 0 4px;
+  text-align: center;
+  opacity: .75;
+}
+
+/* ------------------------------------------------------------
+   手抜きページの書き換えエディタ
+   ------------------------------------------------------------ */
+
+.editor {
+  margin: 0 0 26px;
+  border: 3px dashed var(--ink);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  padding: 14px 18px;
+  text-align: left;
+}
+
+.editor summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 900;
+  list-style: none;
+}
+
+.editor summary::-webkit-details-marker { display: none; }
+.editor summary::before { content: "▶"; display: inline-block; margin-right: .45em; font-size: .68em; }
+.editor[open] summary::before { content: "▼"; }
+.editor[open] summary { margin-bottom: 14px; }
+
+.editor__box { display: flex; flex-direction: column; gap: 12px; }
+
+.editor__box label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.editor__box input {
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: #FFF7EC;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.editor__box input:focus { outline: 3px solid var(--accent); outline-offset: 1px; }
+
+/* ------------------------------------------------------------
+   画面 5｜404
+   ------------------------------------------------------------ */
+
+.screen--404 .body-copy { text-align: center; }
+.screen--404 .btn { margin-top: 8px; }
+
+/* ------------------------------------------------------------
+   小さい端末
+   ------------------------------------------------------------ */
+
+@media (max-width: 380px) {
+  body { padding: 0 12px; }
+  .choice { padding: 14px 15px; font-size: 14.5px; }
+  .body-copy { padding: 20px 18px; }
+}
